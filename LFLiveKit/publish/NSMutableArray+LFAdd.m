@@ -8,7 +8,7 @@
 
 #import "NSMutableArray+LFAdd.h"
 
-@implementation NSMutableArray (YYAdd)
+@implementation NSMutableArray (LFAdd)
 
 - (void)lfRemoveFirstObject {
     if (self.count) {

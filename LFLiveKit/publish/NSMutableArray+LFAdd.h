@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableArray (YYAdd)
+@interface NSMutableArray (LFAdd)
 
 /**
    Removes and returns the object with the lowest-valued index in the array.
