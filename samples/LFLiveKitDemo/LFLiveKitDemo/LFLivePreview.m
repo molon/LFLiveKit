@@ -267,7 +267,7 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
         imageView.alpha = 0.8;
         imageView.frame = CGRectMake(100, 100, 29, 29);
         imageView.image = [UIImage imageNamed:@"ios-29x29"];
-        _session.warterMarkView = imageView;*/
+        _session.waterMarkView = imageView;*/
         
     }
     return _session;
