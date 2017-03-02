@@ -120,6 +120,7 @@ SAVC(mp4a);
     if (_rtmp != NULL) {
         PILI_RTMP_Close(_rtmp, &_error);
         PILI_RTMP_Free(_rtmp);
+        _rtmp = NULL;
     }
     [self RTMP264_Connect:(char *)[_stream.url cStringUsingEncoding:NSASCIIStringEncoding]];
 }
@@ -509,8 +510,6 @@ Failed:
     _isReconnecting = NO;
     if(_isConnected) return;
     
-    _isReconnecting = NO;
-    if (_isConnected) return;
     if (_rtmp != NULL) {
         PILI_RTMP_Close(_rtmp, &_error);
         PILI_RTMP_Free(_rtmp);
@@ -526,6 +525,7 @@ Failed:
     if (_rtmp != NULL) {
         PILI_RTMP_Close(_rtmp, &_error);
         PILI_RTMP_Free(_rtmp);
+        _rtmp = NULL;
     }
     [self RTMP264_Connect:(char *)[_stream.url cStringUsingEncoding:NSASCIIStringEncoding]];
 }

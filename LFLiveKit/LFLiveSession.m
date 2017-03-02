@@ -17,7 +17,7 @@
 #import "LFGPUImageBeautyFilter.h"
 #import "LFH264VideoEncoder.h"
 
-
+#warning 这个库的线程安全比较堪忧
 @interface LFLiveSession ()<LFAudioCaptureDelegate, LFVideoCaptureDelegate, LFAudioEncodingDelegate, LFVideoEncodingDelegate, LFStreamSocketDelegate>
 
 /// 音频配置

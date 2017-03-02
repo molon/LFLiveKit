@@ -108,10 +108,11 @@
     outBufferList.mBuffers[0].mDataByteSize = inBuffer.mDataByteSize;   // 设置缓冲区大小
     outBufferList.mBuffers[0].mData = aacBuf;           // 设置AAC缓冲区
     UInt32 outputDataPacketSize = 1;
+#warning 这里的buffers直接给于inBuffer容易产生误解，其实直接丢个buf进来，然后回调里面直接去塞数据相对来说更直白些
     if (AudioConverterFillComplexBuffer(m_converter, inputDataProc, &buffers, &outputDataPacketSize, &outBufferList, NULL) != noErr) {
         return;
     }
-    
+#warning 需要测试下上面的方法是不是一定就是同步的
     LFAudioFrame *audioFrame = [LFAudioFrame new];
     audioFrame.timestamp = timeStamp;
     audioFrame.data = [NSData dataWithBytes:aacBuf length:outBufferList.mBuffers[0].mDataByteSize];
@@ -181,6 +182,7 @@
     if(result == noErr) {
         result = AudioConverterSetProperty(m_converter, kAudioConverterEncodeBitRate, propSize, &outputBitrate);
     }
+#warning 这里为什么不判断result了，难道是觉得如果码率设置不成功就不成功吧？音频无所谓？
     
     return YES;
 }
@@ -189,7 +191,8 @@
 #pragma mark -- AudioCallBack
 OSStatus inputDataProc(AudioConverterRef inConverter, UInt32 *ioNumberDataPackets, AudioBufferList *ioData, AudioStreamPacketDescription * *outDataPacketDescription, void *inUserData) { //<span style="font-family: Arial, Helvetica, sans-serif;">AudioConverterFillComplexBuffer 编码过程中，会要求这个函数来填充输入数据，也就是原始PCM数据</span>
     AudioBufferList bufferList = *(AudioBufferList *)inUserData;
-    ioData->mBuffers[0].mNumberChannels = 1;
+#warning 需要测试下这个ioData和外面给于的outBufferList是不是一份，还是与in那个是一份
+    ioData->mBuffers[0].mNumberChannels = bufferList.mBuffers[0].mNumberChannels;
     ioData->mBuffers[0].mData = bufferList.mBuffers[0].mData;
     ioData->mBuffers[0].mDataByteSize = bufferList.mBuffers[0].mDataByteSize;
     return noErr;
